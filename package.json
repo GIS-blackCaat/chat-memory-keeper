@@ -1,0 +1,49 @@
+{
+  "name": "chat-memory-keeper",
+  "version": "1.1.0",
+  "description": "群聊记忆管家 - Group chat memory and profile manager for OpenClaw IM bots",
+  "keywords": [
+    "openclaw",
+    "skill",
+    "memory",
+    "chat",
+    "profile",
+    "group-chat",
+    "chinese",
+    "dingtalk",
+    "wechat",
+    "telegram"
+  ],
+  "homepage": "https://github.com/YOUR_USERNAME/chat-memory-keeper",
+  "bugs": {
+    "url": "https://github.com/YOUR_USERNAME/chat-memory-keeper/issues"
+  },
+  "license": "MIT",
+  "author": "Your Name <your-email@example.com>",
+  "files": [
+    "skills/chat-memory-keeper/",
+    "docs/",
+    "memory/templates/",
+    "README.md",
+    "LICENSE",
+    "CONTRIBUTING.md"
+  ],
+  "scripts": {
+    "test": "echo \"No tests specified\" && exit 0",
+    "lint": "echo \"No linting specified\" && exit 0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/YOUR_USERNAME/chat-memory-keeper.git"
+  },
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "openclaw": {
+    "type": "skill",
+    "category": "memory",
+    "language": "zh-CN",
+    "minVersion": "2026.02.0",
+    "channels": ["dingtalk", "wecom", "telegram"]
+  }
+}

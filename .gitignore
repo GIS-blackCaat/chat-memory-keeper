@@ -1,0 +1,19 @@
+# Dependencies
+node_modules/
+
+# OpenClaw runtime
+*.log
+
+# User data (should not be committed)
+memory/profiles/*.md
+memory/memos/*.md
+memory/events/*.json
+memory/chat-memory-config.json
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db

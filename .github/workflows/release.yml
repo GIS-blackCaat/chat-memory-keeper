@@ -1,0 +1,27 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          generate_release_notes: true
+          files: |
+            skills/chat-memory-keeper/SKILL.md
+      
+      - name: Publish to ClawHub
+        run: |
+          echo "Publishing to ClawHub..."
+          echo "Run: npx clawhub@latest publish ./skills/chat-memory-keeper"
+          echo "See: https://clawhub.ai/"
