@@ -1,305 +1,391 @@
-# Chat Memory Keeper / 群聊记忆管家
+# 💬 Chat Memory Keeper / 群聊记忆管家
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![OpenClaw Skill](https://img.shields.io/badge/OpenClaw-Skill-blue.svg)](https://docs.openclaw.ai/tools/skills)
-[![Languages](https://img.shields.io/badge/languages-EN%2FCN-red.svg)](README.md)
-[![Version](https://img.shields.io/badge/version-2.0.0-green.svg)](CHANGELOG.md)
+**Version**: 2.0.0  
+**Author**: 黑猫 🐈‍⬛  
+**License**: MIT
 
-> **English**: Intelligent conversation analyzer for IM bots. Automatically extracts events, moods, tasks, and builds user profiles from group chats.
->
-> **中文**: 智能群聊对话分析工具。自动从群聊中提取事件、心情、任务，构建人物档案和备忘录。
-
----
-
-## 🌟 Features / 功能特性
-
-| Feature / 功能 | English / 英文 | 中文 / Chinese |
-|----------------|----------------|----------------|
-| **Event Extraction** | ✅ Meetings, appointments, plans | ✅ 会议、约定、计划 |
-| **Mood Tracking** | ✅ Emotional state analysis | ✅ 情绪状态分析 |
-| **Profile Building** | ✅ Auto-build user profiles | ✅ 自动构建人物档案 |
-| **Task Management** | ✅ Extract action items | ✅ 提取待办事项 |
-| **Psychological Analysis** | ✅ Word choice & patterns | ✅ 用词和模式分析 |
-| **Multi-channel** | ✅ DingTalk/WeChat/Telegram | ✅ 钉钉/微信/Telegram |
-| **Privacy First** | ✅ Local storage only | ✅ 仅本地存储 |
+[![Version](https://img.shields.io/badge/version-2.0.0-blue.svg)](https://github.com/GIS-blackCaat/chat-memory-keeper)
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+[![OpenClaw](https://img.shields.io/badge/OpenClaw-Skill-orange.svg)](https://openclaw.ai)
+[![Platforms](https://img.shields.io/badge/platforms-DingTalk%2FWeChat%2FTelegram-green.svg)](https://github.com/GIS-blackCaat/chat-memory-keeper)
 
 ---
 
-## 🚀 Quick Start / 快速开始
+## 📋 概述
 
-### 1. Install / 安装
+**群聊记忆管家** - 自动提取群聊中的事件、心情、地点、人物、待办，构建人物档案和备忘录。
+
+**支持平台**：钉钉、企业微信、Telegram
+
+---
+
+## 🎯 核心功能
+
+| 功能 | 说明 |
+|------|------|
+| **📝 事件提取** | 自动识别群聊中的重要事件 |
+| **😊 心情记录** | 提取用户情绪和心情变化 |
+| **📍 地点追踪** | 记录用户位置变化 |
+| **👥 人物档案** | 构建群成员个人档案 |
+| **✅ 待办管理** | 提取并跟踪待办事项 |
+| **📊 记忆总结** | 定期生成群聊记忆总结 |
+
+---
+
+## 🚀 快速开始
+
+### 安装
 
 ```bash
-# Via ClawHub / 通过 ClawHub
+# 使用 ClawHub 安装
 npx clawhub@latest install chat-memory-keeper
 
-# Or Git / 或 Git
-git clone https://github.com/YOUR_USERNAME/chat-memory-keeper.git
+# 或手动安装
+git clone https://github.com/GIS-blackCaat/chat-memory-keeper.git
 cp -r chat-memory-keeper/skills/chat-memory-keeper ~/.openclaw/skills/
 ```
 
-### 2. Configure / 配置
+### 配置
 
-Create `~/.openclaw/memory/chat-memory-config.json`:
-
-```json
-{
-  "enabled": true,
-  "groups": [
-    {
-      "id": "your-group-id",
-      "name": "My Group / 我的群",
-      "enabled": true
-    }
-  ],
-  "psychologicalAnalysis": {
-    "enabled": true,
-    "reportFrequency": "weekly"
-  },
-  "privacy": {
-    "maskPhoneNumbers": true,
-    "retentionDays": 365
-  }
-}
-```
-
-### 3. Use / 使用
-
-In group chat / 在群聊中：
-
-```
-@bot summarize today / @机器人 整理今天
-@bot check Zhang San / @机器人 查 张三
-@bot check tasks / @机器人 查 待办
+```yaml
+# 配置文件
+chat_memory:
+  enabled: true
+  platforms:
+    - dingtalk      # 钉钉
+    - wecom         # 企业微信
+    - telegram      # Telegram
+  extract:
+    events: true    # 事件提取
+    moods: true     # 心情记录
+    locations: true # 地点追踪
+    people: true    # 人物档案
+    tasks: true     # 待办管理
+  summary:
+    daily: true     # 每日总结
+    weekly: true    # 每周总结
 ```
 
 ---
 
-## 📊 How It Works / 工作原理
+## 📝 功能详解
 
+### 1️⃣ 事件提取
+
+**自动识别**：
+- ✅ 会议安排
+- ✅ 活动计划
+- ✅ 重要决定
+- ✅ 项目进展
+- ✅ 生日纪念日
+
+**示例**：
 ```
-┌─────────────┐     ┌──────────────┐     ┌─────────────┐
-│  Group Chat │ ──> │  AI Analysis │ ──> │   Profiles  │
-│  群聊对话    │     │  AI 分析      │     │   人物档案   │
-└─────────────┘     └──────────────┘     └─────────────┘
-       │                    │                    │
-       │                    │                    │
-       ▼                    ▼                    ▼
-┌─────────────┐     ┌──────────────┐     ┌─────────────┐
-│   Events    │     │    Moods     │     │   Tasks     │
-│   事件      │     │    心情      │     │   待办      │
-└─────────────┘     └──────────────┘     └─────────────┘
-```
-
----
-
-## 🧠 Psychological Analysis / 心理分析
-
-### Analysis Dimensions / 分析维度
-
-| Dimension / 维度 | Weight / 权重 | Metrics / 指标 |
-|------------------|---------------|----------------|
-| **Word Choice / 用词** | 40% | Emotion words, pronouns, affirmations |
-| **Interaction / 互动** | 30% | Reply patterns, response time |
-| **Frequency / 频率** | 15% | Message count (reference) |
-| **Speed / 速度** | 15% | Avg reply time (reference) |
-
-### Example Report / 报告示例
-
-```markdown
-## Psychological Profile: Zhang San
-
-### Word Analysis / 用词分析
-- Affirmation words: 24% (High cooperation / 高配合度)
-- Negation words: 3% (Low, may avoid disagreement / 低，可能避免反对)
-- "We" vs "I": 12% vs 18% (Team oriented / 团队导向)
-
-### Interaction Patterns / 互动模式
-- Most replies to: Li Si (58%)
-- Avg response time: 2 minutes
-- Active hours: 9:00-18:00
-
-### Insights / 洞察
-✅ Cooperative team player / 合作的团队成员
-⚠️ May need encouragement to express disagreements / 可能需要鼓励表达不同意见
+群聊：明天下午 3 点开项目评审会
+提取：
+- 类型：会议
+- 时间：明天 15:00
+- 内容：项目评审会
+- 参与人：群成员
 ```
 
 ---
 
-## 🔒 Privacy & Security / 隐私与安全
+### 2️⃣ 心情记录
 
-### Data Storage / 数据存储
+**情绪识别**：
+- 😊 开心/兴奋
+- 😔 难过/沮丧
+- 😠 生气/不满
+- 😌 平静/放松
+- 😰 焦虑/紧张
 
-| Data Type / 数据类型 | Storage / 存储 | Retention / 保留 |
-|---------------------|----------------|------------------|
-| User Profiles / 人物档案 | Local / 本地 | Permanent / 永久 |
-| Daily Memos / 每日备忘 | Local / 本地 | 365 days |
-| Raw Messages / 原始消息 | ❌ Not stored / 不存储 | N/A |
-
-### Privacy Features / 隐私功能
-
-- ✅ **Local Only** - No cloud sync / 仅本地，无云端同步
-- ✅ **Auto-Redaction** - Phone, ID, bank info / 自动脱敏
-- ✅ **Configurable** - Set retention period / 可配置保留期
-- ✅ **Export/Delete** - Full data control / 完全数据控制
+**示例**：
+```
+群聊：今天项目上线成功了，太开心了！
+提取：
+- 用户：张三
+- 心情：😊 开心
+- 原因：项目上线成功
+- 时间：今天
+```
 
 ---
 
-## 📁 File Structure / 文件结构
+### 3️⃣ 地点追踪
+
+**位置记录**：
+- 📍 工作地点
+- 🏠 居住地点
+- ✈️ 出差地点
+- 🏖️ 旅游地点
+
+**示例**：
+```
+群聊：我这周要去曼谷出差
+提取：
+- 用户：李四
+- 类型：出差
+- 地点：泰国曼谷
+- 时间：本周
+```
+
+---
+
+### 4️⃣ 人物档案
+
+**档案内容**：
+- 👤 基本信息（姓名、职位）
+- 🎂 生日纪念日
+- 🍜 饮食偏好
+- 🎯 工作目标
+- 📊 性格特点
+
+**示例**：
+```
+人物档案：施玉
+- 昵称：施主管
+- 职位：市场营销
+- 所在地：泰国曼谷
+- 饮食偏好：不辣、喜欢甜食
+- 生日：3 月 15 日
+- 工作：印度市场营销
+```
+
+---
+
+### 5️⃣ 待办管理
+
+**待办提取**：
+- ✅ 工作任务
+- ✅ 个人计划
+- ✅ 提醒事项
+- ✅ 截止日期
+
+**示例**：
+```
+群聊：记得明天提交周报
+提取：
+- 类型：待办
+- 内容：提交周报
+- 截止时间：明天
+- 提醒：提前 1 小时
+```
+
+---
+
+## 📊 记忆总结
+
+### 每日总结
+
+```
+📅 群聊记忆日报 - 2026 年 3 月 8 日
+
+【今日事件】
+• 下午 3 点：项目评审会
+• 晚上 8 点：团队聚餐
+
+【心情记录】
+• 张三：😊 项目上线成功
+• 李四：😰 担心 deadline
+
+【待办提醒】
+• 明天：提交周报（张三）
+• 后天：客户演示（李四）
+
+【地点变化】
+• 李四：本周曼谷出差
+```
+
+### 每周总结
+
+```
+📊 群聊记忆周报 - 2026 年第 10 周
+
+【本周事件】
+• 周一：项目启动会
+• 周三：需求评审
+• 周五：上线发布
+
+【心情趋势】
+• 周一：😰 紧张（项目启动）
+• 周三：😌 平静（需求确认）
+• 周五：😊 兴奋（成功上线）
+
+【待办完成】
+• 完成率：85%
+• 未完成：2 项（延期）
+
+【人物动态】
+• 张三：负责后端开发
+• 李四：负责前端开发
+• 王五：产品经理
+```
+
+---
+
+## 🔧 高级配置
+
+### 自定义提取规则
+
+```yaml
+extraction:
+  custom_rules:
+    - pattern: "记得.*"
+      type: reminder
+    - pattern: "明天.*点"
+      type: event
+    - pattern: "开心 | 高兴 | 太好了"
+      type: mood_happy
+    - pattern: "难过 | 伤心 | 郁闷"
+      type: mood_sad
+```
+
+### 提醒配置
+
+```yaml
+reminders:
+  enabled: true
+  advance_time: 3600  # 提前 1 小时提醒
+  channels:
+    - dingtalk
+  format: markdown
+```
+
+### 隐私配置
+
+```yaml
+privacy:
+  encrypt_data: true
+  auto_delete_days: 90
+  exclude_keywords:
+    - "密码"
+    - "机密"
+    - "保密"
+```
+
+---
+
+## 📁 文件结构
 
 ```
 chat-memory-keeper/
-├── skills/chat-memory-keeper/
-│   └── SKILL.md              # Skill definition / 技能定义
-├── docs/
-│   ├── GUIDE_EN.md           # English guide / 英文指南
-│   ├── GUIDE_CN.md           # 中文指南
-│   └── PSYCHOLOGY.md         # Analysis docs / 分析文档
-├── memory/
-│   ├── chat-memory-config.json  # Config / 配置
-│   ├── profiles/                # User profiles / 人物档案
-│   └── memos/                   # Daily memos / 每日备忘
-├── README.md                   # This file / 本文件
-├── LICENSE                     # MIT License
-├── CONTRIBUTING.md             # Contribution guide / 贡献指南
-└── package.json                # NPM config / NPM 配置
+├── SKILL.md                  # 技能说明（必需）
+├── README.md                 # 本文件
+├── LICENSE                   # MIT 许可证
+├── CHANGELOG.md              # 变更日志
+├── CONTRIBUTING.md           # 贡献指南
+├── package.json              # 包配置
+├── docs/                     # 文档目录
+│   ├── user-guide.md         # 用户指南
+│   ├── api-reference.md      # API 参考
+│   └── platform-setup.md     # 平台配置
+└── skills/
+    └── chat-memory-keeper/
+        └── SKILL.md          # 实际技能文件
 ```
 
 ---
 
-## 🌍 Supported Channels / 支持渠道
+## 🎯 使用场景
 
-| Channel / 渠道 | Text / 文本 | Image / 图片 | File / 文件 | Stream / 流模式 |
-|----------------|-------------|--------------|-------------|-----------------|
-| **DingTalk / 钉钉** | ✅ | ✅ (Stream) | ✅ (Stream) | ✅ |
-| **WeChat Work / 企微** | ✅ | ✅ | ✅ | ⏳ Coming |
-| **Telegram** | ✅ | ✅ | ✅ | ⏳ Coming |
-| **Slack** | ⏳ Coming | ⏳ Coming | ⏳ Coming | ⏳ Coming |
+### 场景 1：项目团队群
 
----
+```
+群聊：项目攻坚队
+功能：
+- 会议安排自动提取
+- 任务分配自动记录
+- 进度更新自动追踪
+- 每日站会自动总结
+```
 
-## ⚙️ Advanced Configuration / 高级配置
+### 场景 2：家庭群
 
-### Full Config Example / 完整配置示例
+```
+群聊：幸福一家人
+功能：
+- 生日纪念日提醒
+- 家庭活动计划
+- 家人心情记录
+- 重要决定存档
+```
 
-```json
-{
-  "version": "2.0.0",
-  "enabled": true,
-  "groups": [
-    {
-      "id": "dingtalk-group-xxx",
-      "name": "Product Team / 产品团队",
-      "enabled": true,
-      "watchMembers": [],
-      "extractLevel": "standard"
-    }
-  ],
-  "extraction": {
-    "events": true,
-    "moods": true,
-    "locations": true,
-    "people": true,
-    "tasks": true
-  },
-  "psychologicalAnalysis": {
-    "enabled": true,
-    "reportFrequency": "weekly",
-    "weights": {
-      "wordAnalysis": 0.40,
-      "interactionPattern": 0.30,
-      "messageFrequency": 0.15,
-      "responseSpeed": 0.15
-    }
-  },
-  "privacy": {
-    "maskPhoneNumbers": true,
-    "maskIdCards": true,
-    "maskBankAccounts": true,
-    "retentionDays": 365
-  },
-  "notifications": {
-    "dailySummary": true,
-    "summaryTime": "22:00",
-    "channel": "dingtalk"
-  }
-}
+### 场景 3：朋友群
+
+```
+群聊：快乐小分队
+功能：
+- 聚会活动安排
+- 旅行计划记录
+- 心情分享
+- 美好回忆存档
 ```
 
 ---
 
-## 🧪 Testing / 测试
+## 🔄 版本历史
 
-### Test Commands / 测试命令
+### v2.0.0 (2026-03-08)
 
-```bash
-# Check installation / 检查安装
-ls ~/.openclaw/skills/chat-memory-keeper/
+**新增**：
+- ✅ 支持钉钉、企业微信、Telegram
+- ✅ 心情记录功能
+- ✅ 地点追踪功能
+- ✅ 人物档案构建
+- ✅ 待办管理功能
 
-# Check config / 检查配置
-cat ~/.openclaw/memory/chat-memory-config.json
+**改进**：
+- 📝 事件提取更准确
+- 📊 总结报告更详细
+- 🔒 隐私保护更完善
 
-# View profiles / 查看档案
-ls ~/.openclaw/memory/profiles/
+### v1.0.0 (2026-03-06)
 
-# View memos / 查看备忘
-ls ~/.openclaw/memory/memos/
-```
-
-### Test in Chat / 在聊天中测试
-
-```
-@bot test memory
-@bot analyze this conversation
-@bot show my profile
-```
+**初始版本**：
+- ✅ 基础事件提取
+- ✅ 每日总结
+- ✅ 钉钉支持
 
 ---
 
-## 🤝 Contributing / 贡献
+## 🤝 贡献
 
-We welcome contributions in:
+欢迎贡献！请查看 [CONTRIBUTING.md](CONTRIBUTING.md)
 
-- 🌍 **Translations** - Help translate to more languages
-- 🐛 **Bug fixes** - Report and fix issues
-- ✨ **Features** - New analysis capabilities
-- 📚 **Docs** - Improve documentation
+### 贡献方式
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for details.
-
-欢迎贡献：
-
-- 🌍 **翻译** - 帮助翻译更多语言
-- 🐛 **Bug 修复** - 报告和修复问题
-- ✨ **功能** - 新的分析能力
-- 📚 **文档** - 改进文档
-
-详见 [CONTRIBUTING.md](CONTRIBUTING.md)。
+1. Fork 本仓库
+2. 创建功能分支 (`git checkout -b feature/AmazingFeature`)
+3. 提交更改 (`git commit -m 'Add some AmazingFeature'`)
+4. 推送到分支 (`git push origin feature/AmazingFeature`)
+5. 开启 Pull Request
 
 ---
 
-## 📄 License / 许可证
+## 📄 许可证
 
-MIT License - See [LICENSE](LICENSE) file.
-
----
-
-## 🙏 Acknowledgments / 致谢
-
-- [OpenClaw](https://github.com/openclaw/openclaw) - AI assistant framework
-- [ClawHub](https://clawhub.ai/) - Skill marketplace
-- All contributors / 所有贡献者
+MIT License - 查看 [LICENSE](LICENSE) 文件
 
 ---
 
-<div align="center">
+## 🔗 相关链接
 
-**Let AI remember what matters** 🧠
+- **OpenClaw 官方文档**: https://docs.openclaw.ai
+- **ClawHub**: https://clawhub.com
+- **黑猫技术博客**: https://gis-blackcaat.github.io/
+- **相关 Skill**:
+  - [domain-mentor](https://github.com/GIS-blackCaat/domain-mentor) - 领域学习导师
+  - [methodology-matcher](https://github.com/GIS-blackCaat/methodology-matcher) - 任务方法论匹配器
 
-**让 AI 记住重要的事**
+---
 
-[Documentation](docs/) | [Issues](https://github.com/YOUR_USERNAME/chat-memory-keeper/issues) | [Discussions](https://github.com/YOUR_USERNAME/chat-memory-keeper/discussions)
+## 📞 联系方式
 
-Made with ❤️ by [Your Name](https://github.com/YOUR_USERNAME)
+- **GitHub**: [@GIS-blackCaat](https://github.com/GIS-blackCaat)
+- **博客**: https://gis-blackcaat.github.io/
 
-</div>
+---
+
+**最后更新**: 2026 年 3 月 8 日  
+**维护者**: 黑猫 🐈‍⬛
